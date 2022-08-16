@@ -23,8 +23,8 @@ jobs:
       - name: Build and Push the application image to GitHub Container Registry
         uses: cadu1982/hello-action@master
         with:
-          github-repo-owner: ${{ steps.owner-name-repo.outputs.github-repo-owner }}
-          github-repo-name: ${{ steps.owner-name-repo.outputs.github-repo-name }}
+          # github-repo-owner: ${{ steps.owner-name-repo.outputs.github-repo-owner }}
+          # github-repo-name: ${{ steps.owner-name-repo.outputs.github-repo-name }}
           general-tag: ${{ steps.general-tag.outputs.general-tag }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
           github-actor: ${{ github.actor }}

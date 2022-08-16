@@ -1,0 +1,35 @@
+name: Deploy a container instance via GitHub Actions
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  Build-Application:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3.0.0
+
+      - name: Generate General Tag (Run Date and GitHub Run Number)
+        id: general-tag
+        run: echo "::set-output name=general-tag::$(date +'%Y%m%d_'$GITHUB_RUN_NUMBER)"
+
+      # - name: Split the owner and name of a repository
+      #   id: owner-name-repo
+      #   uses: BancoArbi/github-split-repo-owner-name-actions@v1.0.1
+
+      - name: Build and Push the application image to GitHub Container Registry
+        uses: cadu1982/hello-action@v1
+        with:
+          github-repo-owner: ${{ steps.owner-name-repo.outputs.github-repo-owner }}
+          github-repo-name: ${{ steps.owner-name-repo.outputs.github-repo-name }}
+          general-tag: ${{ steps.general-tag.outputs.general-tag }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-actor: ${{ github.actor }}
+
+    outputs:
+      github-repo-owner: ${{ steps.owner-name-repo.outputs.github-repo-owner }}
+      github-repo-name: ${{ steps.owner-name-repo.outputs.github-repo-name }}
+      general-tag: ${{ steps.general-tag.outputs.general-tag }}

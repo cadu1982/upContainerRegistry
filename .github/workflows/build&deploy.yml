@@ -16,15 +16,15 @@ jobs:
         id: general-tag
         run: echo "::set-output name=general-tag::$(date +'%Y%m%d_'$GITHUB_RUN_NUMBER)"
 
-      # - name: Split the owner and name of a repository
-      #   id: owner-name-repo
-      #   uses: BancoArbi/github-split-repo-owner-name-actions@v1.0.1
+      - name: Split the owner and name of a repository
+        id: owner-name-repo
+        uses: ./.github/actions/action@master
 
       - name: Build and Push the application image to GitHub Container Registry
         uses: cadu1982/hello-action@master
         with:
-          # github-repo-owner: ${{ steps.owner-name-repo.outputs.github-repo-owner }}
-          # github-repo-name: ${{ steps.owner-name-repo.outputs.github-repo-name }}
+          github-repo-owner: ${{ steps.owner-name-repo.outputs.github-repo-owner }}
+          github-repo-name: ${{ steps.owner-name-repo.outputs.github-repo-name }}
           general-tag: ${{ steps.general-tag.outputs.general-tag }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
           github-actor: ${{ github.actor }}

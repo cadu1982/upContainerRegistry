@@ -1,0 +1,23 @@
+name: 'Split the owner and name of a repository'
+
+description: 'Action to split the owner and name of a repository, and then export that information to different environment variables'
+
+outputs:
+  github-repo-owner:
+    description: "GitHub repository owner"
+    value: ${{ steps.get-owner-name.outputs.github-repo-owner }}
+  github-repo-name:
+    description: "GitHub repository name"
+    value: ${{ steps.get-owner-name.outputs.github-repo-name }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Set repository owner and name as outputs
+      id: get-owner-name
+      run: |
+        IN=${{ github.repository }}
+        nameSplitRepo=(${IN//// })
+        echo "::set-output name=github-repo-owner::$(echo ${nameSplitRepo[0]} | tr '[:upper:]' '[:lower:]')"
+        echo "::set-output name=github-repo-name::$(echo ${nameSplitRepo[1]} | tr '[:upper:]' '[:lower:]')"
+      shell: bash

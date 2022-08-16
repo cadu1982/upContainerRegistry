@@ -21,7 +21,7 @@ jobs:
       #   uses: BancoArbi/github-split-repo-owner-name-actions@v1.0.1
 
       - name: Build and Push the application image to GitHub Container Registry
-        uses: cadu1982/hello-action@v1
+        uses: cadu1982/hello-action@master
         with:
           github-repo-owner: ${{ steps.owner-name-repo.outputs.github-repo-owner }}
           github-repo-name: ${{ steps.owner-name-repo.outputs.github-repo-name }}

@@ -18,7 +18,7 @@ jobs:
 
       - name: Split the owner and name of a repository
         id: owner-name-repo
-        uses: /.github/actions/action.yml
+        uses: ./.github/actions/action@master
 
       - name: Build and Push the application image to GitHub Container Registry
         uses: cadu1982/hello-action@master
